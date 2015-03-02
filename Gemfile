@@ -43,3 +43,8 @@ group :development, :test do
   gem 'spring'
 end
 
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
+gem 'devise_token_auth'
