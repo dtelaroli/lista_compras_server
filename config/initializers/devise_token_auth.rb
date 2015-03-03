@@ -21,7 +21,12 @@ DeviseTokenAuth.setup do |config|
   #config.omniauth_prefix = "/omniauth"
 
   Rails.application.config.middleware.use OmniAuth::Builder do
+    ENV['FACEBOOK_KEY'] = '419563724879727'
+    ENV['FACEBOOK_SECRET'] = '1673f113c84e682ba0fe2f7c301e0df9'
     provider :facebook,      ENV['FACEBOOK_KEY'], ENV['FACEBOOK_SECRET']
+    
+    ENV['GOOGLE_KEY'] = '336517423411-bhgqvi5pvpgucqso45empn84lt55pg17.apps.googleusercontent.com'
+    ENV['GOOGLE_SECRET'] = 'wykvvOwUzNTAWOKk7rYOcQ-9'
     provider :google_oauth2, ENV['GOOGLE_KEY'],   ENV['GOOGLE_SECRET']
   end
 
