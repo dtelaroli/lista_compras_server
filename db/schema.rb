@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150302162206) do
+ActiveRecord::Schema.define(version: 20150303104129) do
+
+  create_table "products", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "products", ["id"], name: "sqlite_autoindex_products_1", unique: true
 
   create_table "users", force: :cascade do |t|
     t.string   "provider",                            null: false
