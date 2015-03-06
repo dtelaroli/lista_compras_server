@@ -10,7 +10,7 @@ class ListsController < ApplicationController
   end
 
   def create
-    @list = List.new(list_params)
+    @list = List.find_or_initialize_by(list_params)
 
     respond_to do |format|
       if @list.save
@@ -51,6 +51,6 @@ class ListsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def list_params
-    params.require(:list).permit(:user_id, :name, :archived).tap {|l| l[:user] = current_user }
+    params.require(:list).permit(:id, :user_id, :name, :archived, :created_at).tap {|l| l[:user] = current_user }
   end
 end
