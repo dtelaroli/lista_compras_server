@@ -7,4 +7,5 @@ class User < ActiveRecord::Base
 
   has_many :lists
   has_many :list_products, through: :lists
+  has_many :shares
 end

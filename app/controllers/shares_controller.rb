@@ -1,6 +1,10 @@
 class SharesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_shares, only: [:index, :destroy]
   before_action :set_share, only: [:destroy]
+
+  def index
+  end
 
   def create
     @share = Share.find_or_initialize_by(share_params)
@@ -23,8 +27,12 @@ class SharesController < ApplicationController
 
   private
 
+  def set_shares
+    @shares = current_user.shares
+  end
+
   def set_share
-    @share = Share.find(params[:id])
+    @share = @shares.find(params[:id])
   end
 
   def share_params
