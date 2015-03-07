@@ -28,7 +28,7 @@ class SharesController < ApplicationController
   end
 
   def share_params
-    user = User.find_by(email: params[:share][:email])
-    params.require(:share).permit(:list_id, :email).tap {|p| p[:user] = user}
+    user = User.find_by(email: params[:email])
+    params.require(:share).permit(:list_id).tap {|p| p[:user] = user}
   end
 end
