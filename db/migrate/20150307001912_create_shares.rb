@@ -1,6 +1,7 @@
 class CreateShares < ActiveRecord::Migration
   def change
-    create_table :shares do |t|
+    create_table :shares, id: false do |t|
+      t.uuid :id, primary_key: true
       t.references :user, index: true
       t.uuid :list_id, index: true
 
