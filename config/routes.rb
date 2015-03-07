@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :shares
+
   resources :list_products
 
   resources :lists
