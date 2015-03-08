@@ -43,11 +43,19 @@ group :development, :test do
   gem 'spring'
 end
 
+group :development do
+  gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano-rvm'
+  gem 'capistrano-bundler'
+  gem 'capistrano-passenger'
+end
+
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 gem 'devise_token_auth'
 gem 'rack-cors', :require => 'rack/cors'
-
 gem 'activeuuid'
+
