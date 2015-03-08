@@ -7,6 +7,8 @@ class SharesController < ApplicationController
   end
 
   def create
+    return save_all(params['_json']) if params['_json'].is_a?(Array)
+
     @share = Share.find_or_initialize_by(share_params)
 
     respond_to do |format|
@@ -26,6 +28,16 @@ class SharesController < ApplicationController
   end
 
   private
+
+  def save_all(shares)
+    shares.each do |p|
+      instance = Share.find_or_initialize_by(id: p['id'])
+      instance.update(p.permit('list_id', 'created_at').tap {|p| p[:user] = user})
+    end
+    respond_to do |format|
+      format.json { head :no_content }
+    end
+  end
 
   def set_shares
     @shares = current_user.shares

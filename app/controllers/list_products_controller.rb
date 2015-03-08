@@ -10,6 +10,8 @@ class ListProductsController < ApplicationController
   end
 
   def create
+    return save_all(params['_json']) if params['_json'].is_a?(Array)
+
     @list_product = ListProduct.find_or_initialize_by(list_product_params)
 
     respond_to do |format|
@@ -39,6 +41,16 @@ class ListProductsController < ApplicationController
   end
 
   private
+
+  def save_all(list)
+    list.each do |p|
+      instance = ListProduct.find_or_initialize_by(id: p['id'])
+      instance.update(p.permit('list_id', 'product_id', 'ok'))
+    end
+    respond_to do |format|
+      format.json { head :no_content }
+    end
+  end
 
   def set_list_products
     @list_products = current_user.list_products

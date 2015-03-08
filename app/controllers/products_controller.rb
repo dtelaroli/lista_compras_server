@@ -13,6 +13,8 @@ class ProductsController < ApplicationController
   end
 
   def create
+    return save_all(params['_json']) if params['_json'].is_a?(Array)
+
     @product = Product.find_or_initialize_by(product_params)
 
     respond_to do |format|
@@ -42,6 +44,16 @@ class ProductsController < ApplicationController
   end
 
   private
+
+  def save_all(products)
+    products.each do |p|
+      instance = Product.find_or_initialize_by(id: p['id'])
+      instance.update(p.permit('name'))
+    end
+    respond_to do |format|
+      format.json { head :no_content }
+    end
+  end
   
   def set_product
     @product = Product.find(params[:id])

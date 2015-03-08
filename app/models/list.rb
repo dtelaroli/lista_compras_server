@@ -2,5 +2,5 @@ class List < ActiveRecord::Base
   include ActiveUUID::UUID
 
   belongs_to :user
-  has_many :list_products
+  has_many :list_products, dependent: :destroy
 end

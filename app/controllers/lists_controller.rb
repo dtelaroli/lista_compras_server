@@ -10,6 +10,8 @@ class ListsController < ApplicationController
   end
 
   def create
+    return save_all(params['_json']) if params['_json'].is_a?(Array)
+
     @list = List.find_or_initialize_by(list_params)
 
     respond_to do |format|
@@ -39,6 +41,20 @@ class ListsController < ApplicationController
   end
 
   private
+ 
+  def save_all(list)
+    list.each do |p|
+      instance = List.find_or_initialize_by(id: p['id'])
+      if p['sync'] == 'TRASH'
+        instance.destroy unless instance.nil?
+      else
+        instance.update(p.permit('name', 'archived', 'created_at').tap {|l| l[:user] = current_user})
+      end
+    end
+    respond_to do |format|
+      format.json { head :no_content }
+    end
+  end
 
   def set_lists
     @lists = current_user.lists
@@ -51,6 +67,6 @@ class ListsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def list_params
-    params.require(:list).permit(:id, :user_id, :name, :archived, :created_at).tap {|l| l[:user] = current_user }
+    params.require(:list).permit(:id, :user_id, :name, :archived, :created_at).tap {|l| l[:user] = current_user}
   end
 end
