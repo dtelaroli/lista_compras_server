@@ -44,11 +44,13 @@ ActiveRecord::Schema.define(version: 20150307001912) do
 
   create_table "shares", force: :cascade do |t|
     t.integer  "user_id"
+    t.integer  "by_id"
     t.uuid     "list_id",    limit: 16
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
   end
 
+  add_index "shares", ["by_id"], name: "index_shares_on_by_id"
   add_index "shares", ["id"], name: "sqlite_autoindex_shares_1", unique: true
   add_index "shares", ["list_id"], name: "index_shares_on_list_id"
   add_index "shares", ["user_id"], name: "index_shares_on_user_id"

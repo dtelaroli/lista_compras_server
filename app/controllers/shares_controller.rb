@@ -32,7 +32,11 @@ class SharesController < ApplicationController
   def save_all(shares)
     shares.each do |p|
       instance = Share.find_or_initialize_by(id: p['id'])
-      instance.update(p.permit('list_id', 'created_at').tap {|p| p[:user] = user})
+      param = params.permit('list_id', 'created_at').tap do |i|
+        i[:user] = user
+        i[:by] = current_user
+      end
+      instance.update(param)
     end
     respond_to do |format|
       format.json { head :no_content }
@@ -49,6 +53,9 @@ class SharesController < ApplicationController
 
   def share_params
     user = User.find_by(email: params[:email])
-    params.permit(:list_id, :created_at).tap {|p| p[:user] = user}
+    params.permit(:list_id, :created_at).tap do |p| 
+      p[:user] = user
+      p[:by] = current_user
+    end
   end
 end
