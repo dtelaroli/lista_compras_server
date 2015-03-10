@@ -26,4 +26,4 @@ production:
   host: localhost
   database: lists
   username: postgres
-  password: <%= ENV["POSTGRES_PASS"] %>
+  password: '<%= ENV["POSTGRES_PASS"] %>'
