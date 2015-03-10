@@ -23,5 +23,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
+  host: localhost
+  database: lists
   username: postgres
   password: <%= ENV['POSTGRES_PASS'] %>
