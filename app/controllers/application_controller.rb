@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   respond_to :json
 
   rescue_from StandardError do |exception|
+    logger.error(exception)
     render :json => {errors: [exception.message]}, :status => :unprocessable_entity
   end
 end
