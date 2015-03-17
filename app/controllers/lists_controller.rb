@@ -48,7 +48,7 @@ class ListsController < ApplicationController
       if p['sync'] == 'TRASH'
         instance.destroy unless instance.nil?
       else
-        instance.update(p.permit('name', 'archived').tap {|l| l[:user] = current_user })
+        instance.update(p.permit('name', 'archived', 'created_at').tap {|l| l[:user] = current_user })
       end
     end
     respond_to do |format|
