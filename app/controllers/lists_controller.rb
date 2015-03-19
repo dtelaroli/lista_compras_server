@@ -51,7 +51,7 @@ class ListsController < ApplicationController
         instance.update(p.permit('name', 'archived').tap do |l|
           l[:user] = current_user
           l[:created_at] = Date.strptime(l['created_at'], '%s')
-        )
+        end)
       end
     end
     respond_to do |format|
