@@ -48,7 +48,10 @@ class ListsController < ApplicationController
       if p['sync'] == 'TRASH'
         instance.destroy unless instance.nil?
       else
-        instance.update(p.permit('name', 'archived', 'created_at').tap {|l| l[:user] = current_user })
+        instance.update(p.permit('name', 'archived').tap do |l|
+          l[:user] = current_user
+          l[:created_at] = Date.strptime(l['created_at'], '%s')
+        )
       end
     end
     respond_to do |format|
