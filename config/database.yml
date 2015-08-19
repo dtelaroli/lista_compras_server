@@ -23,7 +23,4 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  host: ec2-54-197-230-210.compute-1.amazonaws.com
-  database: d8t7b9m3qqo4ln
-  username: taroorsjjhqszg
-  password: '<%= ENV["POSTGRES_PASS"] %>'
+  host: <%= ENV['HEROKU_POSTGRESQL_RED_URL'] %>
