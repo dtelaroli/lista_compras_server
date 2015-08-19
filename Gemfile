@@ -43,16 +43,16 @@ end
 
 group :development do
   gem 'sqlite3'
-  gem 'capistrano'
-  gem 'capistrano-rails'
-  gem 'capistrano-rvm'
-  gem 'capistrano-bundler'
-  gem 'capistrano-passenger'
+  # gem 'capistrano'
+  # gem 'capistrano-rails'
+  # gem 'capistrano-rvm'
+  # gem 'capistrano-bundler'
+  # gem 'capistrano-passenger'
 end
 
 group :production do
-  gem 'pg'
 end
+gem 'pg'
 
 gem 'devise'
 gem 'omniauth'
