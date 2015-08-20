@@ -60,5 +60,4 @@ gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 gem 'devise_token_auth'
 gem 'rack-cors', :require => 'rack/cors'
-gem 'activeuuid'
 

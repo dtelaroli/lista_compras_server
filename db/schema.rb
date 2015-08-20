@@ -13,7 +13,19 @@
 
 ActiveRecord::Schema.define(version: 20150307001912) do
 
-  create_table "list_products", force: :cascade do |t|
+  create_table "lists", id: false, force: :cascade do |t|
+    t.uuid     "id",         limit: 16
+    t.uuid     "user_id",    limit: 16,                 null: false
+    t.string   "name",                                  null: false
+    t.boolean  "archived",              default: false, null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "lists", ["user_id"], name: "index_lists_on_user_id"
+
+  create_table "lists_products", id: false, force: :cascade do |t|
+    t.uuid     "id",         limit: 16
     t.uuid     "list_id",    limit: 16
     t.uuid     "product_id", limit: 16
     t.boolean  "ok"
@@ -21,28 +33,18 @@ ActiveRecord::Schema.define(version: 20150307001912) do
     t.datetime "updated_at",            null: false
   end
 
-  add_index "list_products", ["id"], name: "sqlite_autoindex_list_products_1", unique: true
+  add_index "lists_products", ["list_id"], name: "index_lists_products_on_list_id"
+  add_index "lists_products", ["product_id"], name: "index_lists_products_on_product_id"
 
-  create_table "lists", force: :cascade do |t|
-    t.integer  "user_id",                    null: false
-    t.string   "name",                       null: false
-    t.boolean  "archived",   default: false, null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+  create_table "products", id: false, force: :cascade do |t|
+    t.uuid     "id",         limit: 16
+    t.string   "name",                  null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
-  add_index "lists", ["id"], name: "sqlite_autoindex_lists_1", unique: true
-  add_index "lists", ["user_id"], name: "index_lists_on_user_id"
-
-  create_table "products", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "products", ["id"], name: "sqlite_autoindex_products_1", unique: true
-
-  create_table "shares", force: :cascade do |t|
+  create_table "shares", id: false, force: :cascade do |t|
+    t.uuid     "id",         limit: 16
     t.integer  "user_id"
     t.integer  "by_id"
     t.uuid     "list_id",    limit: 16
@@ -51,7 +53,6 @@ ActiveRecord::Schema.define(version: 20150307001912) do
   end
 
   add_index "shares", ["by_id"], name: "index_shares_on_by_id"
-  add_index "shares", ["id"], name: "sqlite_autoindex_shares_1", unique: true
   add_index "shares", ["list_id"], name: "index_shares_on_list_id"
   add_index "shares", ["user_id"], name: "index_shares_on_user_id"
 

@@ -1,4 +1,4 @@
-class ListProductsController < ApplicationController
+class ListsProductsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_list_products, only: [:index, :show, :update, :destroy]
   before_action :set_list_product, only: [:show, :update, :destroy]
@@ -12,7 +12,7 @@ class ListProductsController < ApplicationController
   def create
     return save_all(params['_json']) if params['_json'].is_a?(Array)
 
-    @list_product = ListProduct.find_or_initialize_by(list_product_params)
+    @list_product = ListsProduct.find_or_initialize_by(list_product_params)
 
     respond_to do |format|
       if @list_product.save
@@ -44,7 +44,7 @@ class ListProductsController < ApplicationController
 
   def save_all(list)
     list.each do |p|
-      instance = ListProduct.find_or_initialize_by(id: p['id'])
+      instance = ListsProduct.find_or_initialize_by(id: p['id'])
       instance.update(p.permit('list_id', 'product_id', 'ok'))
     end
     respond_to do |format|
@@ -53,7 +53,7 @@ class ListProductsController < ApplicationController
   end
 
   def set_list_products
-    @list_products = current_user.list_products
+    @list_products = current_user.lists_products
   end
 
   def set_list_product

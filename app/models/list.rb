@@ -1,6 +1,4 @@
 class List < ActiveRecord::Base
-  include ActiveUUID::UUID
-
   belongs_to :user
-  has_many :list_products, dependent: :destroy
+  has_many :lists_products, dependent: :destroy
 end
